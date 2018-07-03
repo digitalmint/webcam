@@ -408,9 +408,9 @@ func waitForFrame(fd uintptr, timeout uint32) (count int, err error) {
 		nativeTimeVal := unix.NsecToTimeval(timeoutNsec)
 		tv := &nativeTimeVal
 
-		count, err = unix.Select(int(fd+1), fds, nil, nil, tv)
+		err = unix.Select(int(fd+1), fds, nil, nil, tv)
 
-		if count < 0 && err == unix.EINTR {
+		if err == unix.EINTR {
 			continue
 		}
 		return
